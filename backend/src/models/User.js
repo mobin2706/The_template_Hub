@@ -58,8 +58,11 @@ userSchema.pre('save', async function(next) {
 
 // Sign JWT
 userSchema.methods.getSignedJwtToken = function() {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE
+  const secret = process.env.JWT_SECRET || 'templatehub_default_secret_key_change_in_production';
+  const expire = process.env.JWT_EXPIRE || '30d';
+  
+  return jwt.sign({ id: this._id }, secret, {
+    expiresIn: expire
   });
 };
 
