@@ -10,6 +10,7 @@ import {
   Menu, X, Sun, Moon, Upload, User, LogOut,
   LayoutDashboard, Bookmark, Search, FileText
 } from 'lucide-react';
+import { getMediaUrl } from '@/lib/api';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -134,7 +135,7 @@ export default function Navbar() {
                     <div className="relative w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-white text-sm font-semibold overflow-hidden">
                       {user?.avatar ? (
                         <img 
-                          src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5001${user.avatar}`} 
+                          src={getMediaUrl(user.avatar)} 
                           alt="Avatar" 
                           className="w-full h-full object-cover" 
                         />

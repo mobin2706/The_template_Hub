@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Download, Star, Eye, Bookmark, BookmarkCheck, FileText, FileSpreadsheet, FileImage, Presentation } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import api from '@/lib/api';
+import api, { getMediaUrl } from '@/lib/api';
 import { useState } from 'react';
 
 const categoryColors = {
@@ -69,7 +69,7 @@ export default function TemplateCard({ template, index = 0, onBookmarkToggle }) 
             {template.thumbnailUrl ? (
               <>
                 <img 
-                  src={template.thumbnailUrl.startsWith('http') ? template.thumbnailUrl : `http://localhost:5001${template.thumbnailUrl}`} 
+                  src={getMediaUrl(template.thumbnailUrl)} 
                   alt={template.title} 
                   className="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
                 />

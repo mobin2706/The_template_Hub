@@ -10,7 +10,7 @@ import {
   User, Bookmark, BookmarkCheck, Share2, Flag, ChevronRight,
   Presentation, FileSpreadsheet, Send, Edit3, Save, X
 } from 'lucide-react';
-import api from '@/lib/api';
+import api, { getMediaUrl, BASE_URL } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import StarRating from '@/components/ui/StarRating';
 import TemplateCard from '@/components/templates/TemplateCard';
@@ -111,9 +111,8 @@ export default function TemplateDetailPage({ params }) {
   const handleDownload = async () => {
     setDownloading(true);
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000';
       const link = document.createElement('a');
-      link.href = `${backendUrl}/api/templates/${id}/download`;
+      link.href = `${BASE_URL}/api/templates/${id}/download`;
       link.download = template.fileName;
       document.body.appendChild(link);
       link.click();
@@ -250,7 +249,7 @@ export default function TemplateDetailPage({ params }) {
                 {template.thumbnailUrl ? (
                   <>
                     <img 
-                      src={template.thumbnailUrl.startsWith('http') ? template.thumbnailUrl : `http://localhost:5001${template.thumbnailUrl}`} 
+                      src={getMediaUrl(template.thumbnailUrl)} 
                       alt={template.title} 
                       className="absolute inset-0 w-full h-full object-cover opacity-90 scale-100 transition-transform duration-700 hover:scale-105"
                     />

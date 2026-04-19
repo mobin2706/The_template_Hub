@@ -7,7 +7,7 @@ import {
   User, FileText, Download, Star, Bookmark, Edit3, Save, X, Calendar
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import api from '@/lib/api';
+import api, { getMediaUrl } from '@/lib/api';
 import TemplateCard from '@/components/templates/TemplateCard';
 import LoadingSpinner, { SkeletonGrid } from '@/components/ui/LoadingSpinner';
 
@@ -41,7 +41,7 @@ function ProfileContent() {
       fetchData();
       setEditName(user.name || '');
       setEditBio(user.bio || '');
-      setAvatarPreview(user.avatar ? (user.avatar.startsWith('http') ? user.avatar : `http://localhost:5001${user.avatar}`) : '');
+      setAvatarPreview(getMediaUrl(user.avatar));
     }
   }, [user]);
 
@@ -125,7 +125,7 @@ function ProfileContent() {
             <div className="relative w-20 h-20 rounded-2xl group flex-shrink-0">
               {avatarPreview || (user.avatar && !avatarFile) ? (
                 <img 
-                  src={avatarPreview || (user.avatar.startsWith('http') ? user.avatar : `http://localhost:5001${user.avatar}`)} 
+                  src={avatarPreview || getMediaUrl(user.avatar)} 
                   alt="Profile Avatar" 
                   className="w-full h-full object-cover rounded-2xl shadow-lg border-2 border-white/10"
                 />
